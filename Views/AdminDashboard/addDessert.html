@@ -1,0 +1,145 @@
+<h2>Add new dessert</h2>
+<form method="POST" action="adminProfile">
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" name="name" id="name" required>
+    </div>
+    <div>
+        <label for="intro">Intro: </label>
+        <textarea name="intro" id="intro" required></textarea>
+    </div>
+    <div>
+        <label for="recipe">Recipe: </label>
+        <textarea name="recipe" id="recipe" required></textarea>
+    </div>
+    <div>
+        <h3>Cooking</h3>
+        <div id="ingredients"></div> 
+
+    </div>
+     <hr>
+    <div>
+        <label for="category">Category: </label>
+        <select name="category_id" id="category" required>
+            <option selected disabled >Choose category</option>
+            {% for category in categories %}
+                <option value={{category.category_id}}>{{category.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="author">Author: </label>
+        <select name="author_id" id="author" required>
+            <option selected disabled >Choose author</option>
+            {% for author in authors %}
+                <option value={{author.author_id}}>{{author.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <table>
+            <tr><th colspan="2">Info</th><th></th></tr>
+            <tr><th>Time</th><td> <input type="number" name="info_time" min="1" required> </td></tr>
+            <tr><th>Servings</th><td> <input type="number" name="info_servings" min="1" required> </td></tr>
+        </table>
+    </div>
+    <div>
+        <table>
+            <tr><th colspan="2">Nutrition Facts</th><th></th></tr>
+            <tr><th>Calories</th><td> <input type="number" name="nutrition_fact_calories" min="1" required> </td></tr> 
+            <tr><th>Protein</th><td> <input type="number" name="nutrition_fact_protein"  step=".1" min="0" required> </td></tr> 
+            <tr><th>Carbohydrates</th><td> <input type="number" name="nutrition_fact_carbohydrates" step=".1" min="0" required> </td></tr> 
+            <tr><th>Fat</th><td> <input type="number" name="nutrition_fact_fat" step=".1" min="0" required> </td></tr> 
+            <tr><th>Sugars</th><td> <input type="number" name="nutrition_fact_sugars" step=".1" min="0" required> </td></tr> 
+        </table>
+    </div>
+    <div>
+        <label for="author">Tags: </label>
+        <div>
+            {% for tag in tags %}
+            <input type="checkbox" id="tag{{tag.tag_id}}" name='tags[]' value={{tag.tag_id}}> 
+            <label for="tag{{tag.tag_id}}"> {{tag.name}} </label><br>
+            {% endfor %}
+        </div>
+    </div>
+    <input type="submit" value="Make Dessert">
+    
+</form>
+
+
+<script>
+    
+    var ingredientsData = {{ ingredients|json_encode|raw }};
+    var ingredientCategories = {{ ingredientCategories|json_encode|raw }};     
+
+    function getIngredients(ingredientsData, cateogry){
+       return ingredientsData.filter((v,i,a)=>v.ingredient_category_id==cateogry);
+    }
+
+    const ingredientsElement = document.getElementById("ingredients");
+    const select = document.createElement("select");
+    select.required=true;
+    select.innerHTML = `<option selected disabled>Select type of ingredients</option>`;
+    for(let i=0; i<ingredientCategories.length; i++){
+        select.innerHTML+= 
+        `<option value=${ingredientCategories[i].ingredient_category_id} > 
+            ${ingredientCategories[i].name} 
+        </option>`;
+    }
+    select.addEventListener("change",createIngrediantsList);
+    ingredientsElement.appendChild(select);
+
+
+    function createIngrediantsList(e){
+        let category = e.target.value;
+        let ingredientElement = document.createElement("div");
+        let ingredients = getIngredients(ingredientsData,category); 
+        const select2 = document.createElement("select");
+        select2.required=true;
+        select2.innerHTML += `<option value="" selected disabled>Select ingredient</option>`; 
+        for(let i=0; i<ingredients.length; i++){
+            select2.innerHTML+= `<option value=${ingredients[i].ingredient_id}> ${ingredients[i].name}</option>`;
+        }
+        select2.addEventListener("change",getIngredient);
+        ingredientElement.appendChild(select2);
+
+        const inputField = document.createElement("input");
+        inputField.type="text";
+        inputField.classList.add("quantity");
+        inputField.disabled=true;
+        inputField.required=true;
+        ingredientElement.appendChild(inputField);
+
+        const measureElement = document.createElement("span");
+        measureElement.classList.add("measure");
+        ingredientElement.appendChild(measureElement);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("removeBtn");
+        deleteButton.innerText="remove";
+        deleteButton.addEventListener("click",removeIngredient);
+        ingredientElement.appendChild(deleteButton);
+
+        ingredientsElement.appendChild(ingredientElement);
+        this.selectedIndex=0;
+    }
+  
+    function getIngredient(e){
+        let id=e.target.value;
+        let ingredient = ingredientsData.find((v,i)=>v.ingredient_id==id);
+        let quantity = this.parentNode.getElementsByClassName("quantity")[0];
+        quantity.disabled = false;
+        quantity.name =  `ingredients[${ingredient.ingredient_id}]`;
+        let iMeasure = ingredient.measure ? ingredient.measure : "";
+        this.parentNode.getElementsByClassName("measure")[0].innerText = " "+ iMeasure +" ";   
+    }
+
+    function removeIngredient(e){
+        let id=e.target;
+        id.parentNode.remove();
+    }
+
+
+        
+
+</script>

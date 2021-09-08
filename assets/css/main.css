@@ -1,0 +1,98 @@
+*{
+    padding:0px;
+    margin:0px;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0 auto;
+    width: 900px;
+} 
+
+.site-header{
+    display: grid;
+    grid-template-areas: "banner social"
+                         "banner search"
+                         "menu   menu  ";
+}
+
+.banners{grid-area:banner; background-color: chocolate;}
+.social-icons{grid-area:social; text-align:right;}
+.search-box{grid-area:search;}
+
+.social-icons img{
+    height:16px;
+    width: 16px;
+    margin: 0px 10px;
+}
+
+#main-menu{
+    grid-area:menu; 
+    margin: 20px 0px;
+}
+#main-menu>ul{
+    list-style-type:none;
+    display: flex;
+    flex-direction:row;
+    align-items:stretch;
+    align-content: stretch; 
+}
+#main-menu > ul > li{
+    text-align: center;
+    flex-grow:1;
+}
+#main-menu > ul > li >a{
+    display: block;
+    padding:10px 0px;
+    text-decoration: none;
+    color:black;
+}
+#main-menu > ul >li:hover{
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+.categories{
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    flex-wrap: wrap;
+}
+.category{
+    width:50%;
+    text-align: center;
+    padding:50px 100px;
+    border:1px solid #ccc;
+    background:rgba(200, 200, 200, 0.2);
+    text-decoration: none;
+    color:black;
+}
+.category:hover{
+    border:1px solid black;
+    background-color: rgba(200, 200, 200, 0.6);
+}
+
+.site-footer{
+    margin-top: 40px;
+    text-align:center;
+}  
+
+
+
+
+.auction {
+    display: grid;
+    grid-template-areas: "big-image big-image small-image-1 title title title"
+                        "big-image big-image small-image-2 date1 date2 price";
+    grid-template-columns: 120px 0px 80px auto;
+    border-bottom: 1px solid #444;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.auction > .auction-title{grid-area:title; }
+.auction > .auction-date1{grid-area:date1; text-align:center;}
+.auction > .auction-date2{grid-area:date2; text-align:center;}
+.auction > .auction-price{grid-area:price; text-align:right;}
+.auction > .auction-big-image{grid-area:big-image; height:100px; width:120px;}
+.auction > .image-1{grid-area:small-image-1; width:80px;}
+.auction > .image-2{grid-area:small-image-2; width:80px;}

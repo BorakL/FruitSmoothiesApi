@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
+    <title>Ta&amp;Ta - {% block naslov %}Pocetna{% endblock %}</title>
+</head>
+<body>
+    <div class="site-header">
+        <div class="banners">
+            <a href="/" class="banner">
+                <img src="/assets/img/banner-1.jpg" alt="banner-1"/>
+            </a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><img src="/assets/img/social/linkedin.png" alt="Li"></a>
+            <a href="#"><img src="/assets/img/social/facebook.png" alt="Fb"></a>
+            <a href="#"><img src="/assets/img/social/twitter.png" alt="Tw"></a>
+            <a href="#"><img src="/assets/img/social/google-plus.png" alt="Gp"></a>
+            <a href="#"><img src="/assets/img/social/youTube.png" alt="YT"></a>
+        </div>
+        <div class="search-box">
+            <form method="post" action="/search">
+                <input type="text" name="q" placeholder="Ključne reči pretrage">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div id="main-menu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/categories">Recipies</a></li>
+                <li><a href="/profile">Profil</a></li>
+                <li><a href="/contact">Kontakt</a></li>
+                <li><a href="/log-out">Odjava</a></li>
+            </ul>
+        </div>
+    </div>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+    <footer class="site-footer">
+        &copy; 2018 - Summer Desserts
+    </footer>
+</body>
+</html>

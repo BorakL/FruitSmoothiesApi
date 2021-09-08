@@ -1,0 +1,17 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+<form method="POST" action="adminLogin12345">
+    <div>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" required placeholder="Your email">
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required placeholder="Your password">
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "_global/index.html" %}
+
+{% block main %}
+{% spaceless %}
+<p>{{podatak}}</p>
+<div class="categories">
+    {% for category in categories %}
+        <a href="/category/{{ category.category_id }}" class="category">
+            {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
+{% endspaceless %}
+{% endblock %}

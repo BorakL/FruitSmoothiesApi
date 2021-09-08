@@ -1,0 +1,11 @@
+{% extends "_global/index.html" %}
+
+{% block main %} 
+<div class="desserts">
+    {% for dessert in desserts %}
+        <a href="/dessert/{{ dessert.name }}/" class="dessert">
+            {{ dessert.name }}
+        </a>
+    {% endfor %}
+</div> 
+{% endblock %}
