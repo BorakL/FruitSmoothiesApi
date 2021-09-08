@@ -93,24 +93,7 @@ class DessertModel extends \App\Core\Model{
         return $favoriteDesserts;
     }
 
-
-
-
-    // public function deleteDessert($id){
-
-    //     $sql = "DELETE FROM dessert_view WHERE dessert_id=?;
-    //             DELETE FROM comment WHERE dessert_id=?;
-    //             DELETE FROM assessment WHERE dessert_id=?;
-    //             DELETE FROM making WHERE dessert_id=?;
-    //             DELETE FROM info WHERE dessert_id=?;
-    //             DELETE FROM nutrition_fact WHERE dessert_id=?;
-    //             DELETE FROM dessert WHERE dessert_id=?;";
-                
-    //     $prep = $this->getConnection()->prepare($sql);
-    //     return $prep->execute([$id]);
-    // }
-
-
+ 
 
 
     protected function whereClausules($category_id, string $user):string{
@@ -148,4 +131,20 @@ class DessertModel extends \App\Core\Model{
     }
 
    
+
+
+    public function getDessertsBySearch(string $keywords){
+        $sql = "SELECT * FROM `desserts` WHERE `name` LIKE ?;";
+        $keywords = '%' . $keywords . '%';
+        $prep = $this->getConnection()->prepare($sql);
+        if(!$prep){
+            return[];
+        }
+        $res = $prep->execute([$keywords]);
+        if(!$res){
+            return[];
+        }
+        return $prep->fetchAll(\PDO::FETCH_OBJ);
+    }
+
 }
